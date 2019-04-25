@@ -8,7 +8,7 @@ require('./local-strategy');
 // serializeUser(): defines what data to save in the session
 // (happens when you log in successfully)
 passport.serializeUser((userDoc, done) => {
-  console.log("SERIALIZE (save user ID to session) ");
+  console.log("SERIALIZE (save user ID to session) 🐋");
 
   // call done() with null and the result if it's successful
   // (the result is the user's ID that we want to save in the session)
@@ -18,7 +18,7 @@ passport.serializeUser((userDoc, done) => {
 // deserializeUser(): defines how to retrieve the user information from the DB
 // (happens automatically on EVERY request AFTER you log in)
 passport.deserializeUser((userId, done) => {
-  console.log("DESERIALIZE (retrieving user info from the DB) ");
+  console.log("DESERIALIZE (retrieving user info from the DB) 🐓");
 
   User.findById(userId)
     .then(userDoc => {

@@ -9,9 +9,17 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 
+const session = require('express-session');
+
+// import passport docs from config folder
+const passportSetup =  require('./config/passport/passport-setup');
+
+// require CORS
+const cors = require('cors');
+
 
 mongoose
-  .connect('mongodb://localhost/backend-mern-project', {useNewUrlParser: true})
+  .connect(process.env.MONGODB_URI, {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -49,10 +57,30 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
+// allow CORS (Cross Origin Resource Sharing)
+app.use(cors({
+  // allows other origins/domains to send cookies
+  credentials: true,
+  // the array of domains/origins we want to allow cookies from (in our case that is our React app, which runs on port 3000)
+  origin: [ 'http://localhost:3000'  ]
+}));
 
 
+// handle session
+app.use(session({
+  // secret: "some super secret goes here",
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true
+}));
+
+passportSetup(app);
+
+// ROUTES MIDDLEWARE:
 const index = require('./routes/index');
 app.use('/', index);
+
+app.use('/api', require("./routes/auth-routes.js"));
 
 
 module.exports = app;
