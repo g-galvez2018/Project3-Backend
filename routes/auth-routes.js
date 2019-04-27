@@ -120,6 +120,26 @@ router.get("/usersList", (req, res, next)=> {
   })
 })
 
+//Test for routes with query object
+router.get("/usersListTest", (req, res, next)=>{
+  const query = req.query
+  User.find(query)
+    .then( userProfiles => {
+      userProfiles.encryptedPassword = undefined;
+      res.json({
+        confirmation: 'success',
+        data: userProfiles
+      })
+    })
+      .catch(err => {
+          res.json({
+            confirmation: 'fail',
+            message: err.message
+          })
+      })
+})
+
+
 // GET "/checkuser" allows the client to check to see:
 // (a) if we are logged-in
 // (b) what are the details of the logged-in user
