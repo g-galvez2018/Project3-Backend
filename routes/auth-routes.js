@@ -120,7 +120,7 @@ router.get("/usersList", (req, res, next)=> {
   })
 })
 
-//Test for routes with query object
+//Test for routes with query object - Query filter
 router.get("/usersListTest", (req, res, next)=>{
   const query = req.query
   User.find(query)
