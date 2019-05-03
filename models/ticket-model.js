@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
+const autoIncrement = require('mongoose-auto-increment');
 //mongoose.set('useCreateIndex', true);
 
 const Schema = mongoose.Schema;
+
+const connection = mongoose.createConnection("mongodb://localhost/backend-mern-project");
+
+autoIncrement.initialize(connection);
 
 const ticketSchema = new Schema ({
   accountName: {
@@ -13,32 +18,40 @@ const ticketSchema = new Schema ({
     type: String,
     required: true
   },
-  Status: {
+  status: {
     type: String,
+    required: true,
     enum: ["New", "In Progress", "Waiting on Customer","Complete"]
   },
-  Priority: {
+  priority: {
     type: String,
+    required: true,
     enum: ["Low", "Medium", "High"]
   },
   issueType: {
     type: String,
-    enum: ["infrastructure", "Hardware", "Software","User Administration" ]
+    required: true,
+    enum: ["Infrastructure", "Hardware", "Software","User Administration" ]
   },
   date: {
     type: Date, 
     default: Date.now
   },
   dueDate: {
-    type: Date
+    type: Date,
+    default: () => Date.now() + 3*24*60*60*1000
   },
   primaryResource: {
     type: String,
     required: true
   },
-  contentTicket: {
-    title: String,
-    description: String
+  ticketTitle: {
+    type: String,
+    required: true
+  },
+  ticketDescription: {
+    type: String,
+    required: true
   }
 
 },
@@ -47,6 +60,8 @@ const ticketSchema = new Schema ({
  timestamps: true
 }
 );
+
+ticketSchema.plugin(autoIncrement.plugin, { model: 'Ticket', field: 'ticketId', startAt: 100000, incrementBy: 1 });
 
 // "User" model -> "users" collection
 const Ticket = mongoose.model("Ticket", ticketSchema);

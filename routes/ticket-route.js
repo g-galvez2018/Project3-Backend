@@ -1,34 +1,29 @@
-const mongoose = require("mongoose");
-//mongoose.set('useCreateIndex', true);
+const express = require('express');
+const router = express.Router();
 
-const Schema = mongoose.Schema;
+const Ticket = require('../models/ticket-model');
 
-const clientSchema = new Schema ({
-  accountName: {
-    type: String,
-    required: true,
-    minlength: 2
-  },
-  address1: {
-    type: String, 
-    required: true
-  },
-  Phone: {
-    type: String, 
-    required: true
-  },
-  Active: {
-    type: Boolean
-  }
 
-},
-{ 
- //additional settings for Schema Class 
- timestamps: true
-}
-);
 
-// "User" model -> "users" collection
-const Client = mongoose.model("Client", clientSchema);
+router.post ("/addTicket", (req,res,next) =>{
+    Ticket.create (req.body)
+      .then (ticket => {
+          res.json({
+            confirmation: "success",
+            data: ticket
+          })
+      })
+      .catch ( err => {
+          res.json({
+            confirmation: "fail",
+            message: err.message
+          })
+      })
+})
 
-module.exports = Client;  
+
+
+
+
+
+module.exports = router;

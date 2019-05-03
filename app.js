@@ -86,6 +86,7 @@ app.use('/', index);
 
 app.use('/api', require("./routes/auth-routes.js"));
 app.use('/clients', require("./routes/client-routes"))
+app.use('/tickets', require("./routes/ticket-route"))
 
 
 module.exports = app;

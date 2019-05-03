@@ -120,14 +120,13 @@ router.get("/usersList", (req, res, next)=> {
   })
 })
 
-//Test for routes with query object - Query filter
-router.get("/usersListTest", (req, res, next)=>{
+//Get lists of user based on query and only send back what is needed - Query filter
+router.get("/usersListApi", (req, res, next)=>{
   const query = req.query
-  User.find(query)
-    .then( userProfiles => {
-      userProfiles.encryptedPassword = undefined;
+  User.find(query, 'fullName')
+    .then( userProfiles => {      
       res.json({
-        confirmation: 'success',
+        confirmation: 'success',        
         data: userProfiles
       })
     })
