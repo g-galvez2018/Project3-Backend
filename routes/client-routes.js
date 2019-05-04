@@ -54,5 +54,24 @@ router.post ("/addTest", (req,res,next) =>{
     })
 })
 
+//Get Clients for DD control
+//Get lists of user based on query and only send back what is needed - Query filter
+router.get("/clientListApi", (req, res, next)=>{
+  const query = req.query
+  Client.find(query, 'accountName')
+    .then( clientProfiles => {      
+      res.json({
+        confirmation: 'success',        
+        data: clientProfiles
+      })
+    })
+      .catch(err => {
+          res.json({
+            confirmation: 'fail',
+            message: err.message
+          })
+      })
+})
+
 
 module.exports = router;
