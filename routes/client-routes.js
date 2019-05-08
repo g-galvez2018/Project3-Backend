@@ -21,7 +21,23 @@ router.post ("/addClient", (req,res,next) =>{
       })
 })
 
-router.get("/clientsList", (req, res, next) => {
+//Update Client-Account Profile
+router.put("/updateClient/:clientId", (req, res, next) =>{
+  const { accountName, address1, Phone, active} = req.body;
+  const UpdatedClient = {
+    accountName,
+    address1,
+    Phone,
+    active
+  }
+  Client.findByIdAndUpdate(req.params.clientId, UpdatedClient, { new: true }) 
+  .then( theUpdatedClient => {    
+    res.json({theUpdatedClient})    
+  })
+  .catch( err => next(err) )
+})
+
+router.get("/clientList", (req, res, next) => {
   Client.find()
   .then (clients => {
     res.json({
@@ -59,6 +75,23 @@ router.post ("/addTest", (req,res,next) =>{
 router.get("/clientListApi", (req, res, next)=>{
   const query = req.query
   Client.find(query, 'accountName')
+    .then( clientProfiles => {      
+      res.json({
+        confirmation: 'success',        
+        data: clientProfiles
+      })
+    })
+      .catch(err => {
+          res.json({
+            confirmation: 'fail',
+            message: err.message
+          })
+      })
+})
+
+router.get("/clientListEdit/:clientId", (req, res, next)=>{
+  const client = req.params.clientId
+  Client.findById(client)
     .then( clientProfiles => {      
       res.json({
         confirmation: 'success',        

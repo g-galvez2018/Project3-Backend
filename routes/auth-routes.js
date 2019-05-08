@@ -88,35 +88,43 @@ router.get("/profile/:userId", (req, res, next) => {
   User.findById(req.params.userId)
     .then( userProfile => {
       userProfile.encryptedPassword = undefined;
-      res.json({userProfile})
+      res.json({data: userProfile})
     })
     .catch( err => next(err) )
   })
 
 // UPDATE USER PROFILE
 
-router.put("/update/:userId", (req, res, next) =>{
-  const { status, role} = req.body;
+router.put("/updateUser/:userId", (req, res, next) =>{
+  const { status, role, fullName, email} = req.body;
   const UpdatedUser = {
     status,
-    role
+    role,
+    fullName,
+    email
   }
   User.findByIdAndUpdate(req.params.userId, UpdatedUser, { new: true }) 
   .then( theUpdatedUser => {
     theUpdatedUser.encryptedPassword = undefined;
-    res.json({theUpdatedUser})    
+    res.json({data:theUpdatedUser})    
   })
   .catch( err => next(err) )
 })
 
 // GET LIST OF USERS
 router.get("/usersList", (req, res, next)=> {
-  User.find((err, users) => {
-    if (err) {
-      return res.status(400).json({ message: 'Something went wrong while retrieving users' });
-    }
-    users.encryptedPassword = undefined;
-    res.json({users})
+  User.find()
+  .then (users => {
+    res.json({
+        confirmation: "success",
+        data: users
+    })
+  })
+  .catch ( err => {
+      res.json({
+        confirmation: "fail",
+        message: err.message
+      })
   })
 })
 

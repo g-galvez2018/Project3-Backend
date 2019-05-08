@@ -17,7 +17,7 @@ const clientSchema = new Schema ({
     type: String, 
     required: true
   },
-  Active: {
+  active: {
     type: Boolean
   }
 
