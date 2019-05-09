@@ -66,7 +66,7 @@ app.use(cors({
   // allows other origins/domains to send cookies
   credentials: true,
   // the array of domains/origins we want to allow cookies from (in our case that is our React app, which runs on port 3000)
-  origin: [ 'http://localhost:3000', 'https://irontask.herokuapp.com'  ]
+  origin: [ 'http://localhost:3000' , 'https://irontask.herokuapp.com' ]
 }));
 
 
@@ -82,7 +82,7 @@ passportSetup(app);
 
 // ROUTES MIDDLEWARE:
 const index = require('./routes/index');
-app.use('/', index);
+// app.use('/', index);
 
 app.use('/api', require("./routes/auth-routes.js"));
 app.use('/clients', require("./routes/client-routes"))
