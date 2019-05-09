@@ -88,5 +88,10 @@ app.use('/api', require("./routes/auth-routes.js"));
 app.use('/clients', require("./routes/client-routes"))
 app.use('/tickets', require("./routes/ticket-route"))
 
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
+
 
 module.exports = app;
