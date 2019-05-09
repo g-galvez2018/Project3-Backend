@@ -120,12 +120,12 @@ router.get("/usersList", (req, res, next)=> {
         data: users
     })
   })
-  .catch ( err => next(err)
-      // res.json({
-      //   // confirmation: "fail",
-      //   // message: err.message
-      // })
-  )
+  .catch ( err => {
+      res.json({
+        confirmation: "fail",
+        message: err.message
+      })
+  })
 })
 
 //Get lists of user based on query and only send back what is needed - Query filter
@@ -151,10 +151,6 @@ router.get("/usersListApi", (req, res, next)=>{
 // (a) if we are logged-in
 // (b) what are the details of the logged-in user
 router.get("/checkuser", (req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-
-  console.log('here')
-
   if (req.user) {
   // hide "encryptedPassword" before sending the JSON (it's a security risk)
     req.user.encryptedPassword = undefined;
