@@ -4,7 +4,9 @@ const autoIncrement = require('mongoose-auto-increment');
 
 const Schema = mongoose.Schema;
 
-const connection = mongoose.createConnection("mongodb://localhost/backend-mern-project");
+//const connection = mongoose.createConnection("mongodb://localhost/backend-mern-project");
+
+const connection = mongoose.createConnection("mongodb://heroku_0hh832k1:p55p4rvl6rg06pjuql6i1seess@ds153566.mlab.com:53566/heroku_0hh832k1");
 
 autoIncrement.initialize(connection);
 
