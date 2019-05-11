@@ -41,6 +41,10 @@ const ticketSchema = new Schema ({
     type: Date,
     default: () => Date.now() + 3*24*60*60*1000
   },
+  completedDate: {
+    type: Date,
+    default: () => Date.now() 
+  },
   primaryResource: {
     type: String,
     required: true
@@ -52,8 +56,10 @@ const ticketSchema = new Schema ({
   ticketDescription: {
     type: String,
     required: true
+  },
+  ticketSolution: {
+    type: String    
   }
-
 },
 { 
  //additional settings for Schema Class 
