@@ -92,7 +92,7 @@ router.get("/clientListApi", (req, res, next)=>{
 router.get("/clientListEdit/:clientId", (req, res, next)=>{
   const client = req.params.clientId
   Client.findById(client)
-    .then( clientProfiles => {      
+    .then( clientProfiles => {       
       res.json({
         confirmation: 'success',        
         data: clientProfiles
