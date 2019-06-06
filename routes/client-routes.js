@@ -23,11 +23,14 @@ router.post ("/addClient", (req,res,next) =>{
 
 //Update Client-Account Profile
 router.put("/updateClient/:clientId", (req, res, next) =>{
-  const { accountName, address1, Phone, active} = req.body;
+  const { accountName, address, city, state, zipCode, phone, active} = req.body;
   const UpdatedClient = {
     accountName,
-    address1,
-    Phone,
+    address,
+    city,
+    state,
+    zipCode,
+    phone,
     active
   }
   Client.findByIdAndUpdate(req.params.clientId, UpdatedClient, { new: true }) 
