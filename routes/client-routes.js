@@ -4,7 +4,7 @@ const router = express.Router();
 const Client = require('../models/client-model');
 const Test = require("../models/test-model")
 
-
+//Add client to database
 router.post ("/addClient", (req,res,next) =>{
     Client.create (req.body)
       .then (clientProfile => {
